@@ -32,6 +32,7 @@ function Dashboard() {
         <div style={styles.navLinks}>
           <a href="/detect" style={styles.navLink}>🔍 Detect Bugs</a>
           <a href="/quiz" style={styles.navLink}>🧠 Quiz</a>
+          <a href="/profile" style={styles.navLink}>🏅 Profile</a>
           <button style={styles.logoutBtn} onClick={handleLogout}>Logout</button>
         </div>
       </div>

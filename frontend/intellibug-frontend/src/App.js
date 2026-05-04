@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import BugDetector from "./pages/BugDetector";
 import Dashboard from "./pages/Dashboard";
 import Quiz from "./pages/Quiz";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/detect" element={<BugDetector />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

@@ -131,3 +131,57 @@ def get_history(user_email: str):
             "created_at": str(r.created_at)
         } for r in reports
     ]}
+
+class QuizResult(BaseModel):
+    user_email: str
+    score: int
+    total: int
+
+@app.post("/save-quiz")
+def save_quiz(data: QuizResult):
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == data.user_email).first()
+    if not user:
+        db.close()
+        return {"success": False, "message": "User not found"}
+    
+    # Give XP based on score
+    xp_earned = data.score * 10
+    db.close()
+    return {
+        "success": True,
+        "xp_earned": xp_earned,
+        "message": f"You earned {xp_earned} XP!"
+    }
+
+@app.get("/profile/{user_email}")
+def get_profile(user_email: str):
+    db = SessionLocal()
+    reports = db.query(BugReport).filter(BugReport.user_email == user_email).all()
+    db.close()
+    
+    total_scans = len(reports)
+    total_bugs = sum(r.bugs_found for r in reports)
+    xp = total_scans * 5 + total_bugs * 2
+
+    # Badges
+    badges = []
+    if total_scans >= 1: badges.append("🔍 First Scan")
+    if total_scans >= 5: badges.append("🧪 Bug Hunter")
+    if total_scans >= 10: badges.append("⚡ Code Warrior")
+    if total_bugs >= 10: badges.append("🐛 Bug Smasher")
+    if xp >= 50: badges.append("🌟 XP Master")
+
+    # Level
+    if xp < 20: level = "Beginner"
+    elif xp < 50: level = "Intermediate"
+    elif xp < 100: level = "Advanced"
+    else: level = "Expert"
+
+    return {
+        "xp": xp,
+        "level": level,
+        "badges": badges,
+        "total_scans": total_scans,
+        "total_bugs": total_bugs
+    }
