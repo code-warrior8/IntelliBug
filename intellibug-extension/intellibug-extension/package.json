@@ -1,0 +1,43 @@
+{
+  "name": "intellibug-extension",
+  "displayName": "IntelliBug",
+  "description": "AI Bug Detector for VS Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "intellibug.detectBugs",
+        "title": "🐛 IntelliBug: Detect Bugs"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "intellibug.detectBugs",
+        "key": "ctrl+shift+b",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "intellibug.detectBugs",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "eslint": "^8.28.0"
+  }
+}
